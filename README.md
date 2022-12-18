@@ -115,7 +115,7 @@ Now, open **microfrontend-layout.html** and **add following route** as well\
 _I noticed one warning in console of Developer Tools - **Content Security Policy: The page's settings blocked the loading of a resource at ws://IP_ADDRESS:8080/ws ("connect-src").**\
 To resolve this, add **ws://IP_ADDRESS:\* to connect-src in Content-Security-Policy (meta http-equiv)**_
 
-Also, please update module03\vue.config.js with following content after transpileDependencies property and ***restart the server***
+Also, please update module03\vue.config.js with following content after transpileDependencies property and ***restart the server*** \
 configureWebpack: { \
 output: { \
 libraryTarget: "system", \
