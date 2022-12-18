@@ -71,22 +71,22 @@ Then, add following lines under imports of systemjs-importmap\
 "@neworg/module01": "http://localhost:4400/main.js"**
 
 Now, open **microfrontend-layout.html** and add the following line before main tag\
-\<nav\>\
-\<application name="@neworg/navbar"\>\</application\>\
-\</nav\>\
+`<nav>` \
+`<application name="@neworg/navbar"></application>` \
+`</nav>` \
 Then, **update the default route** as mentioned below\
-\<route default\>\
-\<application name="**@neworg/default**"\>\</application\>\
-\</route\>\
+`<route default>` \
+`<application name="@neworg/default"></application>` \
+`</route>` \
 Then, **add following route** as well\
-\<route path="/module01"\>\
-\<application name="@neworg/module01"\>\</application\>\
-\</route\>
+`<route path="/module01">` \
+`<application name="@neworg/module01"></application>` \
+`</route>`
 
 I noticed one warning in console of Developer Tools - **Content Security Policy: The page's settings blocked the loading of a resource at data:image/svg+xml;base64,PHN2ZyB4bWxucz… ("default-src").**\
 To resolve this, add **data: to default-src in Content-Security-Policy (meta http-equiv)**
 
-**Step 9**: Update navbar\src\app\app.component.html with following contents before \<router-outlet\>\</router-outlet\>
+**Step 9**: Update navbar\src\app\app.component.html with following contents before `<router-outlet></router-outlet>` \
 `<div>` \
 ` <a routerLink="/module01">Module 01 (Angular)</a>` \
 ` |<a routerLink="/module02">Module 02 (React)</a>` \
