@@ -14,7 +14,7 @@ Open a new CMD terminal and run **npx create-single-spa**. This command will ask
 ? Would you like to use single-spa Layout Engine **Yes**\
 ? Organization name (can use letters, numbers, dash or underscore) **neworg**
 
-Thats all for creating the initial files for root-config.
+Thats all for creating the initial files for root-config and run the command **npm i & npm start**.
 
 **Step 2**: Create 1st Angular Application - navbar\
 Open a new CMD terminal and run **ng new navbar  --routing --prefix navbar --style css & cd navbar & ng add single-spa-angular & cd ..** (Refer link: https://single-spa.js.org/docs/ecosystem-angular#installation). This command will ask following further details:\
@@ -25,19 +25,19 @@ Would you like to proceed? **Yes**\
 ? Does your application use Angular routing? **Yes**\
 ? What port should your project run on? **4200**
 
-Thats all for creating the initial files for app-parcel - navbar.
+Thats all for creating the initial files for app-parcel - navbar and run the command **npm i & npm run serve:single-spa:navbar**.
 
 **Step 3**: Create 2nd Angular Application - default\
 Open a new CMD terminal and run **ng new default  --routing --prefix default --style css & cd default & ng add single-spa-angular & cd ..** with providing same input mentioned in step 2 except following one:\
 ? What port should your project run on? **4300**
 
-Thats all for creating the initial files for app-parcel - default.
+Thats all for creating the initial files for app-parcel - default and run the command **npm i & npm run serve:single-spa:default**.
 
 **Step 4**: Create 3rd Angular Application - module01\
 Open a new CMD terminal and run **ng new module01  --routing --prefix module01 --style css & cd module01 & ng add single-spa-angular & cd ..** with providing same input mentioned in step 2 except following one:\
 ? What port should your project run on? **4400**
 
-Thats all for creating the initial files for app-parcel - module01.
+Thats all for creating the initial files for app-parcel - module01 and run the command **npm i & npm run serve:single-spa:module01**.
 
 **Step 5**: Create 1st React Application - module02\
 Open a new CMD terminal and run **create-single-spa --framework react**. This command will ask following further details:\
@@ -47,14 +47,14 @@ Open a new CMD terminal and run **create-single-spa --framework react**. This co
 ? Organization name (can use letters, numbers, dash or underscore) **neworg**\
 ? Project name (can use letters, numbers, dash or underscore) **module02**
 
-Thats all for creating the initial files for app-parcel - module02.
+Thats all for creating the initial files for app-parcel - module02 and run the command **npm i & npm start -- --port 8500**.
 
 **Step 6**: Create 1st Vue Application - module03\
 Open a new CMD terminal and run **create-single-spa --framework vue**. This command will ask following further details:\
 ? Directory for new project **module03**\
 ? Organization name (can use letters, numbers, dash or underscore) **neworg**
 
-Thats all for creating the initial files for app-parcel - module03.
+Thats all for creating the initial files for app-parcel - module03 and run the command **npm i & npm run serve**.
 
 **Step 7**: Update **app-routing.module.ts** and **app.module.ts** for angular projects - **navbar**, **default** and **module01** (Refer link: https://single-spa.js.org/docs/ecosystem-angular/#routing) \
 Open app-routing.module.ts and add providers: **[{ provide: APP_BASE_HREF, useValue: '/' }]** to the NgModule.\
@@ -74,7 +74,7 @@ Now, open **microfrontend-layout.html** and add the following line before main t
 `<nav>` \
 `<application name="@neworg/navbar"></application>` \
 `</nav>` \
-Then, **update the default route** as mentioned below\
+Then, **update the name of default route** as mentioned below\
 `<route default>` \
 `<application name="@neworg/default"></application>` \
 `</route>` \
@@ -83,14 +83,49 @@ Then, **add following route** as well\
 `<application name="@neworg/module01"></application>` \
 `</route>`
 
-I noticed one warning in console of Developer Tools - **Content Security Policy: The page's settings blocked the loading of a resource at data:image/svg+xml;base64,PHN2ZyB4bWxucz… ("default-src").**\
-To resolve this, add **data: to default-src in Content-Security-Policy (meta http-equiv)**
+_I noticed one warning in console of Developer Tools - **Content Security Policy: The page's settings blocked the loading of a resource at data:image/svg+xml;base64,PHN2ZyB4bWxucz… ("default-src").**\
+To resolve this, add **data: to default-src in Content-Security-Policy (meta http-equiv)**_
 
-**Step 9**: Update navbar\src\app\app.component.html with following contents before `<router-outlet></router-outlet>` \
+**Step 9**: Update **index.ejs** and **microfrontend-layout.html** for root-config - **main** to register react application\
+Open **index.ejs** and search for following line: "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js" \
+Then, add following lines after above line mentioned for search\
+**"react": "https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js", \
+"react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.production.min.js"** \
+Then, add following lines under imports of systemjs-importmap\
+**"@neworg/module02": "http://localhost:8500/neworg-module02.js"**
+
+Now, open **microfrontend-layout.html** and **add following route** as well\
+`<route path="/module02">` \
+`<application name="@neworg/module02"></application>` \
+`</route>`
+
+**Step 10**: Update **index.ejs** and **microfrontend-layout.html** for root-config - **main** to register vue application\
+Open **index.ejs** and search for following line: "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js" \
+Then, add following lines after above line mentioned for search\
+**"vue": "https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.min.js", \
+"vue-router": "https://cdn.jsdelivr.net/npm/vue-router@4.1.6/dist/vue-router.global.min.js"** \
+Then, add following lines under imports of systemjs-importmap\
+**"@neworg/module03": "http://localhost:8080/js/app.js"**
+
+Now, open **microfrontend-layout.html** and **add following route** as well\
+`<route path="/module03">` \
+`<application name="@neworg/module03"></application>` \
+`</route>`
+
+_I noticed one warning in console of Developer Tools - **Content Security Policy: The page's settings blocked the loading of a resource at ws://IP_ADDRESS:8080/ws ("connect-src").**\
+To resolve this, add **ws://IP_ADDRESS:\* to connect-src in Content-Security-Policy (meta http-equiv)**_
+
+Also, please update module03\vue.config.js with following content after transpileDependencies property and ***restart the server***
+configureWebpack: { \
+output: { \
+libraryTarget: "system", \
+filename: "js/app.js" \
+} \
+} 
+
+**Step 11**: Update navbar\src\app\app.component.html with following contents before `<router-outlet></router-outlet>` \
 `<div>` \
 ` <a routerLink="/module01">Module 01 (Angular)</a>` \
 ` |<a routerLink="/module02">Module 02 (React)</a>` \
 ` |<a routerLink="/module03">Module 03 (Vue)</a>` \
 `</div>`
-
-
