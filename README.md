@@ -129,3 +129,7 @@ filename: "js/app.js" \
 ` |<a routerLink="/module02">Module 02 (React)</a>` \
 ` |<a routerLink="/module03">Module 03 (Vue)</a>` \
 `</div>`
+
+Final Output: \
+<img width="546" alt="2022-12-18 (7)" src="https://user-images.githubusercontent.com/70571098/208305839-084dff37-3fee-49b6-b5a2-7f171c884327.png">
+
